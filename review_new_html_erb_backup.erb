@@ -1,4 +1,10 @@
-<%= display_helper(@review) %>
+<%#= display_helper %>
+
+<% if params[:ice_cream_id] %>
+  <h1>Add a Review for <%= @review.ice_cream.flavor%> - <%= @review.ice_cream.brand.name%></h1>
+<% else %>
+  <h1>Create a review </h1>
+<% end %>
 
 <%= form_for(@review) do |f|%>
   <% if params[:ice_cream_id] %>
