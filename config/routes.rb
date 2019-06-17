@@ -14,6 +14,9 @@ Rails.application.routes.draw do
   #creating a logout route need to use a delete
   delete '/logout' => 'sessions#destroy'
 
+  # Going to recieve/accepting the request from them(google) and => send to our sessions controller
+  get '/auth/google_oauth2/callback' => 'sessions#omniauth'
+
   resources :reviews
   resources :ice_creams do
     resources :reviews, only: [:new, :index]

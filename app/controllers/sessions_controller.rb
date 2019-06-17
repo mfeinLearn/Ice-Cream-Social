@@ -48,4 +48,30 @@ class SessionsController < ApplicationController
     end
     #byebug
   end
+
+  def omniauth
+
+    # we are finding stuff off of email: auth[:info][:email]
+    # and we are also able to set other attributes
+    @user = User.create_by_google_omniauth(auth)
+
+    session[:user_id] = @user.id
+    redirect_to user_path(@user)
+
+  end
+
+  private
+
+  def auth
+    request.env['omniauth.auth']
+  end
 end
+
+# Notes:
+# SessionsController#omniauth :
+# these below save in one step
+# User.find_or_create_by(email: auth[:info][:email])
+# 1. it looks in our db to see if their is anyone with that email
+# and if their is someone with that email exist it uses that first result of our user
+# 2. or if no one does exist it will initalize a new user
+# User.where(email: auth[:info][:email]).first_or_initalize
