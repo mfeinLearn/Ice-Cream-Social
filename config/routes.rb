@@ -15,7 +15,12 @@ Rails.application.routes.draw do
   delete '/logout' => 'sessions#destroy'
 
   # Going to recieve/accepting the request from them(google) and => send to our sessions controller
-  get '/auth/google_oauth2/callback' => 'sessions#omniauth'
+  # :provider - is a dynamic route(could be facebook, google etc...)
+  # Because of this (:provider) their is now a param called provider
+  ## and the session create will have a param called provider then we would go the
+  ### omniauth way if we did have a param called provider.
+  # if it does not have a param called provider (if it is doing a regular loggin then we will go the regular method(the route will change to a create))
+  get '/auth/:provider/callback' => 'sessions#create'
 
   resources :reviews
   resources :ice_creams do
